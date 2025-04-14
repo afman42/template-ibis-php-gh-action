@@ -2,29 +2,25 @@ name: Build Ebook Ibis PHP
 
 on:
   push:
-    branches: [ "main" ]
-    
-#permissions:
-#  contents: read
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Install Deps Ibis Next
-      run: composer global require hi-folks/ibis-next
-    - name: Generate Ebook PDF With Ibis Next Theme Light
-      run: ~/.composer/vendor/bin/ibis-next pdf -d books/en/
-    - name: Generate Ebook PDF With Ibis Next Theme Dark
-      run: ~/.composer/vendor/bin/ibis-next pdf -d books/en/ dark
-    - name: Generate Ebook EPUB With Ibis Next Theme Light
-      run: ~/.composer/vendor/bin/ibis-next epub -d books/en/
-    - uses: actions/upload-artifact@v4
-      with:
-        name: Upload All Ebook
-        path: books/en/export
-        if-no-files-found: error
-        retention-days: 10
+      - uses: actions/checkout@v4
+      - name: Install Deps Ibis Next
+        run: composer global require hi-folks/ibis-next
+      - name: Generate Ebook PDF With Ibis Next Theme Light
+        run: ~/.composer/vendor/bin/ibis-next pdf -d books/en/
+      - name: Generate Ebook PDF With Ibis Next Theme Dark
+        run: ~/.composer/vendor/bin/ibis-next pdf -d books/en/ dark
+      - name: Generate Ebook EPUB With Ibis Next Theme Light
+        run: ~/.composer/vendor/bin/ibis-next epub -d books/en/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: upload-all-ebook
+          path: books/en/export
+          if-no-files-found: error
+          retention-days: 10
